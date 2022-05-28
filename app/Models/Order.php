@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants\OrderConstants;
+use App\Events\OrderProcessing;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -157,4 +158,16 @@ class Order extends Model
     {
         return $this->updated_at;
     }
+
+    /**
+     * @param array $options
+     */
+    protected function finishSave(array $options)
+    {
+        event(new OrderProcessing($this));
+
+        parent::finishSave($options);
+    }
+
+
 }
