@@ -29,8 +29,8 @@ class OrderRequest extends FormRequest
         $serviceMaskPath = ServiceOfAstrologer::class . ',' . ServiceOfAstrologerConstants::DB_MASK_FIELD;
 
         return [
-            'name' => 'required',
-            'email' => 'required|email',
+            'client_name' => 'required',
+            'client_email' => 'required|email',
             'service_mask' => 'required|exists:' . $serviceMaskPath,
         ];
     }
