@@ -59,4 +59,16 @@ class ServiceRepository
             ->pluck(ServiceConstants::DB_NAME_FIELD)
             ->toArray();
     }
+
+    /**
+     * @param string $mask
+     * @return object|null
+     */
+    public static function getByServiceOfAstrologerByIdMask(string $mask): ?object
+    {
+        return ServiceOfAstrologer::query()
+            ->where(ServiceOfAstrologerConstants::DB_MASK_FIELD, $mask)
+            ->toBase()
+            ->first();
+    }
 }
