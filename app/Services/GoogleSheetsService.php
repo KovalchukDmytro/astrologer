@@ -17,7 +17,6 @@ use Revolution\Google\Sheets\Facades\Sheets;
  */
 class GoogleSheetsService
 {
-
     /**
      * @param Order $orderModel
      */
