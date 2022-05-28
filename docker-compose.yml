@@ -1,0 +1,56 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: astrologer
+    container_name: astrologer-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - astrologer
+  mysql:
+    image: mysql:8.0.28
+    container_name: astrologer-mysql
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - ./docker-data/mysql/db-data:/var/lib/mysql:delegated
+    networks:
+      - astrologer
+  nginx:
+    image: nginx:alpine
+    container_name: astrologer-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-data/nginx:/etc/nginx/conf.d/
+    networks:
+      - astrologer
+  redis:
+    image: redis:alpine
+    container_name: astrologer-redis
+    ports:
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
+    volumes:
+      - ./docker-data/redis:/data:delegated
+    networks:
+      - astrologer
+networks:
+  astrologer:
+    driver: bridge
