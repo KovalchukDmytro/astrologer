@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\ServiceConstants;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,7 +24,7 @@ class Service extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        ServiceConstants::DB_NAME_FIELD,
     ];
 
     /**

@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\Service;
+use App\Constants\ServiceConstants;
+use App\Constants\ServiceOfAstrologerConstants;
 use App\Models\ServiceOfAstrologer;
 use Illuminate\Support\Collection;
 
@@ -17,26 +18,46 @@ class ServiceRepository
      */
     public static function getServicesByAstrologerId(int $astrologerId): Collection
     {
-        $servicesTable = app(Service::class)->getTable();
-        $serviceOfAstrologerTable = app(ServiceOfAstrologer::class)->getTable();
-
         $fieldsForView = [
-            $servicesTable . '.name',
-            $serviceOfAstrologerTable . '.price',
-            $serviceOfAstrologerTable . '.service_id',
-            $serviceOfAstrologerTable . '.astrologer_id',
+            ServiceConstants::DB_TABLE . '.' . ServiceConstants::DB_NAME_FIELD,
+            ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_PRICE_FIELD,
+            ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD,
+            ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_ASTROLOGER_RELATION_FIELD,
         ];
 
         return ServiceOfAstrologer::query()
             ->select($fieldsForView)
-            ->where('astrologer_id', $astrologerId)
+            ->where(ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD, $astrologerId)
             ->leftJoin(
-                $servicesTable,
-                $serviceOfAstrologerTable . '.service_id',
+                ServiceConstants::DB_TABLE,
+                ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD,
                 '=',
-                $servicesTable . '.id'
+                ServiceConstants::DB_TABLE . '.' . ServiceConstants::DB_ID_FIELD
             )
             ->toBase()
             ->get();
+    }
+
+    /**
+     * @param int $astrologerId
+     * @return array
+     */
+    public static function getNamesServicesByAstrologerId(int $astrologerId): array
+    {
+        $fieldsForView = [
+            ServiceConstants::DB_TABLE . '.' . ServiceConstants::DB_NAME_FIELD,
+        ];
+
+        return ServiceOfAstrologer::query()
+            ->select($fieldsForView)
+            ->where(ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD, $astrologerId)
+            ->leftJoin(
+                ServiceConstants::DB_TABLE,
+                ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD,
+                '=',
+                ServiceConstants::DB_TABLE . '.' . ServiceConstants::DB_ID_FIELD
+            )
+            ->pluck(ServiceConstants::DB_NAME_FIELD)
+            ->toArray();
     }
 }

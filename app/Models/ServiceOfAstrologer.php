@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\ServiceOfAstrologerConstants;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,7 +24,7 @@ class ServiceOfAstrologer extends Model
     /**
      * @var string
      */
-    protected $table = 'services_of_astrologers';
+    protected $table = ServiceOfAstrologerConstants::DB_TABLE;
 
     /**
      * The attributes that are mass assignable.
@@ -31,9 +32,9 @@ class ServiceOfAstrologer extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'astrologer_id',
-        'service_id',
-        'price',
+        ServiceOfAstrologerConstants::DB_ASTROLOGER_RELATION_FIELD,
+        ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD,
+        ServiceOfAstrologerConstants::DB_PRICE_FIELD,
     ];
 
     /**

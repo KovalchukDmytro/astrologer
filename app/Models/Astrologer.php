@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\AstrologerConstants;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,10 +27,10 @@ class Astrologer extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'avatar',
-        'email',
-        'biography',
+        AstrologerConstants::DB_NAME_FIELD,
+        AstrologerConstants::DB_AVATAR_FIELD,
+        AstrologerConstants::DB_EMAIL_FIELD,
+        AstrologerConstants::DB_BIOGRAPHY_FIELD,
     ];
 
     /**
