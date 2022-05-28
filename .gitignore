@@ -18,3 +18,4 @@ package-lock.json
 /docker-data/mysql/db-data/
 /docker-data/redis/
 docker-data/.DS_Store
+/storage/google_credentials.json

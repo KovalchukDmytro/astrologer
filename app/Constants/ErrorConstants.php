@@ -27,4 +27,9 @@ class ErrorConstants
      * Error creating new order code
      */
     public const ERROR_CREATING_NEW_ORDER_CODE = 2;
+
+    /**
+     * Error while adding data to Google Spreadsheet
+     */
+    public const ERROR_GOOGLE_SPREADSHEETS = 'Error while adding data to Google Spreadsheet';
 }

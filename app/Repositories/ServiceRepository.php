@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Constants\ServiceConstants;
 use App\Constants\ServiceOfAstrologerConstants;
+use App\Models\Service;
 use App\Models\ServiceOfAstrologer;
 use Illuminate\Support\Collection;
 
@@ -70,5 +71,14 @@ class ServiceRepository
             ->where(ServiceOfAstrologerConstants::DB_MASK_FIELD, $mask)
             ->toBase()
             ->first();
+    }
+
+    /**
+     * @param int $serviceId
+     * @return Service|null
+     */
+    public static function getById(int $serviceId): ?object
+    {
+        return Service::query()->where(ServiceConstants::DB_ID_FIELD, $serviceId)->toBase()->first();
     }
 }

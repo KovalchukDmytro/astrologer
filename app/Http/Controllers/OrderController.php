@@ -30,9 +30,9 @@ class OrderController extends Controller
 
         $serviceRelation = ServiceRepository::getByServiceOfAstrologerByIdMask($orderData['service_mask']);
 
-        $isCreated = false;
+        $newOrder = false;
         try {
-            $isCreated = OrderRepository::create($orderData, $serviceRelation);
+            $newOrder = OrderRepository::create($orderData, $serviceRelation);
         } catch (\Exception $exception) {
             Log::error(ErrorConstants::ERROR_CREATING_NEW_ORDER_MESSAGE, [
                 'message' => $exception->getMessage(),
@@ -40,7 +40,7 @@ class OrderController extends Controller
             ]);
         }
 
-        if (!$isCreated) {
+        if (!$newOrder) {
             $errorMessage = ErrorConstants::ERROR_CREATING_NEW_ORDER_MESSAGE;
 
             $errorData = [
