@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AstrologerController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,10 @@ Route::prefix('api')->group(function () {
         Route::prefix('astrologer')->group(function () {
             Route::get('all', [AstrologerController::class, 'all']);
             Route::get('details/{astrologerId}', [AstrologerController::class, 'details']);
+        });
+        Route::prefix('order')->group(function () {
+            Route::post('make', [OrderController::class, 'make']);
+            Route::post('payment', [OrderController::class, 'payment']);
         });
     });
 });

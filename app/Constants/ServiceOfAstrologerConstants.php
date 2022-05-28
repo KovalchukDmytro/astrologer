@@ -27,4 +27,8 @@ class ServiceOfAstrologerConstants
      *
      */
     public const DB_PRICE_FIELD = 'price';
+    /**
+     *
+     */
+    public const DB_MASK_FIELD = 'mask';
 }

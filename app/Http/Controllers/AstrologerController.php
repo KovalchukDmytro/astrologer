@@ -41,12 +41,16 @@ class AstrologerController extends Controller
         $astrologerObj = AstrologerRepository::getById((int)$astrologerId);
 
         if (!$astrologerObj) {
+            $errorMessage = sprintf(ErrorConstants::ERROR_UNDEFINED_ASTROLOGER_MESSAGE, $astrologerId);
+
             $errorData = [
-                'error_message' => sprintf(ErrorConstants::ERROR_UNDEFINED_ASTROLOGER_MESSAGE, $astrologerId),
-                'error_code' => ErrorConstants::ERROR_UNDEFINED_ASTROLOGER_CODE,
+                'message' => $errorMessage,
+                'errors' => [
+                    ErrorConstants::ERROR_UNDEFINED_ASTROLOGER_CODE => $errorMessage,
+                ],
             ];
 
-            Log::error($errorData['error_message'], $errorData);
+            Log::error($errorData['message'], $errorData);
 
             return json_encode($errorData);
         }

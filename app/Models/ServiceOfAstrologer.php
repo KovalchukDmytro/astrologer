@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants\ServiceOfAstrologerConstants;
+use App\Helpers\ServiceDataHelper;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $astrologer_id
  * @property int $service_id
  * @property int $price
+ *
+ * @property string $mask
  *
  * @property string $created_at
  * @property string $updated_at
@@ -35,6 +38,7 @@ class ServiceOfAstrologer extends Model
         ServiceOfAstrologerConstants::DB_ASTROLOGER_RELATION_FIELD,
         ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD,
         ServiceOfAstrologerConstants::DB_PRICE_FIELD,
+        ServiceOfAstrologerConstants::DB_MASK_FIELD,
     ];
 
     /**
@@ -104,8 +108,41 @@ class ServiceOfAstrologer extends Model
     /**
      * @return string
      */
+    public function getMask(): string
+    {
+        return $this->mask;
+    }
+
+    /**
+     * @param string $mask
+     */
+    public function setMask(string $mask): void
+    {
+        $this->mask = $mask;
+    }
+
+    /**
+     * @return string
+     */
     public function getUpdatedAt(): string
     {
         return $this->updated_at;
     }
+
+    /**
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = []): bool
+    {
+        if (
+            $this->isDirty(ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD)
+            || $this->isDirty(ServiceOfAstrologerConstants::DB_ASTROLOGER_RELATION_FIELD)
+        ) {
+            $this->setMask(ServiceDataHelper::encodeServiceIdMask($this->getAstrologerId(), $this->getServiceId()));
+        }
+
+        return parent::save($options);
+    }
+
 }

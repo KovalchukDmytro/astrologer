@@ -21,8 +21,7 @@ class ServiceRepository
         $fieldsForView = [
             ServiceConstants::DB_TABLE . '.' . ServiceConstants::DB_NAME_FIELD,
             ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_PRICE_FIELD,
-            ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD,
-            ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_ASTROLOGER_RELATION_FIELD,
+            ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_MASK_FIELD,
         ];
 
         return ServiceOfAstrologer::query()
