@@ -36,8 +36,8 @@ class GoogleSheetsService
     private static function addRow(array $data): void
     {
         try {
-            Sheets::spreadsheet(config('google.spreadsheet_id'))
-                ->sheet(config('google.sheet_id'))
+            Sheets::spreadsheet(config('astrologer.google.spreadsheet_id'))
+                ->sheet(config('astrologer.google.sheet_id'))
                 ->append([$data]);
         } catch (\Exception $exception) {
             Log::error(ErrorConstants::ERROR_GOOGLE_SPREADSHEETS, [
