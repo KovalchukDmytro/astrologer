@@ -1,0 +1,14 @@
+{
+    "name": "Astrologer",
+    "alias": "astrologer",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Astrologer\\Providers\\AstrologerServiceProvider",
+        "Modules\\Astrologer\\Providers\\EventServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
