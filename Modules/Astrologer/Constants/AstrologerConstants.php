@@ -43,4 +43,9 @@ class AstrologerConstants
      *
      */
     public const DB_UPDATED_AT_FIELD = 'updated_at';
+
+    /**
+     *
+     */
+    public const DEFAULT_AVATAR_PATH = 'images/avatar.png';
 }

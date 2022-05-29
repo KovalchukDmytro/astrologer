@@ -30,7 +30,9 @@ class AstrologerController extends Controller
             $astrologer->services = $services;
         }
 
-        return json_encode($allAstrologers);
+        $viewData = AstrologerDataHelper::prepareShortAstrologerDataForView($allAstrologers);
+
+        return json_encode($viewData);
     }
 
     /**
@@ -60,7 +62,7 @@ class AstrologerController extends Controller
                 $astrologerObj->{AstrologerConstants::DB_ID_FIELD}
             );
 
-        $viewData = AstrologerDataHelper::prepareAstrologerDataForView($astrologerObj, $astrologerServices);
+        $viewData = AstrologerDataHelper::prepareDetailsAstrologerDataForView($astrologerObj, $astrologerServices);
 
         return json_encode($viewData);
     }
