@@ -20,15 +20,13 @@ Route::middleware('auth:api')->get('/astrologer', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('api')->group(function () {
-    Route::prefix('v1')->group(function () {
-        Route::prefix('astrologer')->group(function () {
-            Route::get('all', [AstrologerController::class, 'all']);
-            Route::get('details/{astrologerId}', [AstrologerController::class, 'details']);
-        });
-        Route::prefix('order')->group(function () {
-            Route::post('make', [OrderController::class, 'make']);
-            Route::post('payment', [OrderController::class, 'payment']);
-        });
+Route::prefix('v1')->group(function () {
+    Route::prefix('astrologer')->group(function () {
+        Route::get('all', [AstrologerController::class, 'all']);
+        Route::get('details/{astrologerId}', [AstrologerController::class, 'details']);
+    });
+    Route::prefix('order')->group(function () {
+        Route::post('make', [OrderController::class, 'make']);
+        Route::post('payment', [OrderController::class, 'payment']);
     });
 });

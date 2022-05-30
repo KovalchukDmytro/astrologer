@@ -77,7 +77,7 @@ class AstrologerControllerTest extends TestCase
                 ]
             ]
         ];
-        $response = $this->get('/api/api/v1/astrologer/all');
+        $response = $this->get('/api/v1/astrologer/all');
 
         $response->assertStatus(200);
         $response->assertJson($expectedData);
