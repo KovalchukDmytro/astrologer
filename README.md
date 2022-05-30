@@ -1,5 +1,5 @@
 # Endpoints
-https://www.getpostman.com/collections/1a72a2c6efe9fcfac7d1
+https://www.getpostman.com/collections/c2af5a86aebe89923370
 
 # Возможные улучшения
 - Продуктовые
