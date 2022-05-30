@@ -24,10 +24,10 @@ class AstrologerController extends Controller
     public function all(): bool|string
     {
         $allAstrologers = AstrologerRepository::getAllWithShortInfo();
+        $allServicesByAstrologerId = ServiceRepository::getNamesServicesMapByAstrologerId();
 
         foreach ($allAstrologers as &$astrologer) {
-            $services = ServiceRepository::getNamesServicesByAstrologerId($astrologer->{AstrologerConstants::DB_ID_FIELD});
-            $astrologer->services = $services;
+            $astrologer->services = $allServicesByAstrologerId[$astrologer->{AstrologerConstants::DB_ID_FIELD}] ?? [];
         }
 
         $viewData = AstrologerDataHelper::prepareShortAstrologerDataForView($allAstrologers);

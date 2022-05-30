@@ -39,26 +39,47 @@ class ServiceRepository
     }
 
     /**
-     * @param int $astrologerId
      * @return array
      */
-    public static function getNamesServicesByAstrologerId(int $astrologerId): array
+    public static function getNamesServicesMapByAstrologerId(): array
     {
         $fieldsForView = [
             ServiceConstants::DB_TABLE . '.' . ServiceConstants::DB_NAME_FIELD,
+            ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_ASTROLOGER_RELATION_FIELD,
         ];
 
-        return ServiceOfAstrologer::query()
+        $allServices = ServiceOfAstrologer::query()
             ->select($fieldsForView)
-            ->where(ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD, $astrologerId)
             ->leftJoin(
                 ServiceConstants::DB_TABLE,
                 ServiceOfAstrologerConstants::DB_TABLE . '.' . ServiceOfAstrologerConstants::DB_SERVICE_RELATION_FIELD,
                 '=',
                 ServiceConstants::DB_TABLE . '.' . ServiceConstants::DB_ID_FIELD
             )
-            ->pluck(ServiceConstants::DB_NAME_FIELD)
+            ->get()
             ->toArray();
+
+        return self::mapAstrologerServicesByAstrologerId($allServices);
+    }
+
+    /**
+     * @param array $allServices
+     * @return array
+     */
+    private static function mapAstrologerServicesByAstrologerId(array $allServices): array
+    {
+        $result = [];
+
+        foreach ($allServices as $serviceData) {
+            $astrologerID = $serviceData[ServiceOfAstrologerConstants::DB_ASTROLOGER_RELATION_FIELD];
+            if (!isset($result[$astrologerID])) {
+                $result[$astrologerID] = [];
+            }
+
+            $result[$astrologerID][] = $serviceData[ServiceConstants::DB_NAME_FIELD];
+        }
+
+        return $result;
     }
 
     /**
